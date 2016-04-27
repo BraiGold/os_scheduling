@@ -1,5 +1,6 @@
 #include "tasks.h"
 
+
 using namespace std;
 
 void TaskCPU(int pid, vector<int> params) { // params: n
@@ -18,6 +19,19 @@ void TaskAlterno(int pid, vector<int> params) { // params: ms_pid, ms_io, ms_pid
 	}
 }
 
+int randombis() {
+	return rand() % 1000 + (rand() % 1000) * 1000 + (rand() % 1000) * 1000000;
+}
+
+void TaskConsola(int pid, vector<int> params) {//params: n, bmin, bmax
+	int t;
+	int HIGH = params[2];
+	int LOW = params[1]; 
+	for(int i = 0; i < params[0]; i++){
+		t = randombis() % (HIGH - LOW + 1) + LOW;
+		uso_IO(pid, t); // Uso IO t milisegundos.
+	}
+}
 
 
 void tasks_init(void) {
@@ -27,4 +41,5 @@ void tasks_init(void) {
 	register_task(TaskCPU, 1);
 	register_task(TaskIO, 2);
 	register_task(TaskAlterno, -1);
+	register_task(TaskConsola, 3);
 }
