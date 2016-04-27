@@ -29,6 +29,15 @@ void TaskConsola(int pid, vector<int> params) { // params: n, bmin, bmax
 		r = randombis() % (params[2] - params[1] + 1) + params[1];
 		uso_IO(pid, r);
 	}
+	//return ????? 
+}
+
+void TaskEj2(int pid, vector<int> params) { // params: dondeEmpiezoLlamadaBloqueante
+	uso_CPU(pid, params[0]); //params[0] -1 ????? 
+	int r;
+	r = randombis() % (4 - 1 + 1) + 1;
+	uso_IO(pid, r);
+	//return???
 }
 
 
@@ -40,4 +49,5 @@ void tasks_init(void) {
 	register_task(TaskIO, 2);
 	register_task(TaskAlterno, -1);
 	register_task(TaskConsola, 3);
+	register_task(TaskEj2, 1)
 }
