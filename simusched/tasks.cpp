@@ -31,7 +31,7 @@ void TaskConsola(int pid, vector<int> params) { // params: n, bmin, bmax
 		r = randombis() % (params[2] - params[1] + 1) + params[1];
 		uso_IO(pid, r);
 	}
-	//return ????? 
+	//return; ????? 
 }
 
 void TaskEj2(int pid, vector<int> params) { // params: dondeEmpiezoLlamadaBloqueante
@@ -55,7 +55,7 @@ void TaskBatch(int pid, vector<int> params){ //params: total_cpu, cant_bloqueos
 	if(total_cpu > 0){
 		uso_CPU(pid, total_cpu);
 	}
-	//return;
+	//return;?????
 
 }
 
