@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <queue>
+#include <map>
 #include "basesched.h"
 
 class SchedRR2 : public SchedBase {
@@ -14,7 +15,13 @@ class SchedRR2 : public SchedBase {
 		virtual int tick(int cpu, const enum Motivo m);
 
 	private:
-		int next(int cpu);
+		int cantCores;
+		int next(/*int cpu*/);
+		std::vector<std::queue<int> > colas;
+		std::vector<int> quantum;
+		std::vector<int> quantumRestante;
+		std::vector<int> cantProc;
+		std::map<int,int> pid_cpu;
 };
 
 #endif
