@@ -1,4 +1,6 @@
 #include "tasks.h"
+#include <iostream>     // std::cout
+
 
 
 using namespace std;
@@ -29,17 +31,33 @@ void TaskConsola(int pid, vector<int> params) { // params: n, bmin, bmax
 		r = randombis() % (params[2] - params[1] + 1) + params[1];
 		uso_IO(pid, r);
 	}
-	//return ????? 
+	//return; ????? 
 }
 
 void TaskEj2(int pid, vector<int> params) { // params: dondeEmpiezoLlamadaBloqueante
-	uso_CPU(pid, params[0]); //params[0] -1 ????? 
+	uso_CPU(pid, params[0] - 1);  
 	int r;
 	r = randombis() % (4 - 1 + 1) + 1;
 	uso_IO(pid, r);
-	//return???
+	return;
 }
 
+void TaskBatch(int pid, vector<int> params){ //params: total_cpu, cant_bloqueos
+	int total_cpu = params[0] - 1;
+	int cant_bloqueos = params[1];
+	int r;
+	for(int i = 0; i < cant_bloqueos; i++){ //formula random = % (max - min + 1) + min
+		r = randombis() % ((total_cpu - (cant_bloqueos - i))) + 1;//max = (total_cpu - (cant_bloqueos - i)); min = 1;
+		uso_CPU(pid, r -1);
+		uso_IO(pid, 2);
+		total_cpu = total_cpu - r;
+	}
+	if(total_cpu > 0){
+		uso_CPU(pid, total_cpu);
+	}
+	//return;?????
+
+}
 
 void tasks_init(void) {
 	/* Todos los tipos de tareas se deben registrar acá para poder ser usadas.
@@ -49,5 +67,6 @@ void tasks_init(void) {
 	register_task(TaskIO, 2);
 	register_task(TaskAlterno, -1);
 	register_task(TaskConsola, 3);
-	register_task(TaskEj2, 1)
+	register_task(TaskEj2, 1);
+	register_task(TaskBatch, 2);
 }
