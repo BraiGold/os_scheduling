@@ -15,12 +15,11 @@ class SchedNoMistery : public SchedBase {
     virtual int tick(int cpu, const enum Motivo m);
 
   private:
+    std::vector<std::queue<int> > colas;
     std::vector<int> quantumCola;
-    int quantumRestante;
-    std::list<int> cola;
     std::map<int,int> pid_cola;
-    std::map<int,int> pid_quantumExtra;
-    int n;
+    int quantumRestante, n, cur_pri;
+
     int next(void);
 };
 

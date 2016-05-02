@@ -1,4 +1,3 @@
-TaskCPU 15
+TaskCPU 50
 @5:
-TaskCPU 15
-TaskCPU 15
+*2 TaskCPU 50
