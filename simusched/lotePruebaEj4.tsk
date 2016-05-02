@@ -1,1 +1,4 @@
-*8 TaskCPU 20
+TaskCPU 15
+@5:
+TaskCPU 15
+TaskCPU 15

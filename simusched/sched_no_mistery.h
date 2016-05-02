@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <queue>
+#include <list>
+#include <map>
 #include "basesched.h"
 
 class SchedNoMistery : public SchedBase {
@@ -13,11 +15,12 @@ class SchedNoMistery : public SchedBase {
     virtual int tick(int cpu, const enum Motivo m);
 
   private:
-    std::vector<std::queue<int> > vq;
-    std::vector<int> def_quantum;
-    std::vector<int> unblock_to;
-    int quantum, n, cur_pri;
-
+    std::vector<int> quantumCola;
+    int quantumRestante;
+    std::list<int> cola;
+    std::map<int,int> pid_cola;
+    std::map<int,int> pid_quantumExtra;
+    int n;
     int next(void);
 };
 
