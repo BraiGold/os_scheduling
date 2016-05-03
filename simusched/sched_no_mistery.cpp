@@ -12,6 +12,7 @@ SchedNoMistery::SchedNoMistery(vector<int> argn) {
   queue<int> cola;
   quantumCola.push_back(1);//meto La Cola De 1
   colas.push_back(cola);
+  std::cerr << "tamaño de argn: "<<argn.size() << std::endl;
   for (int i = 0; i < argn.size()-1; i++) {
     quantumCola.push_back(argn[i+1]);
     colas.push_back(cola);
@@ -46,10 +47,9 @@ int SchedNoMistery::tick(int cpu, const enum Motivo m) {
     }
 
     if(m==TICK && quantumRestante==0 && unicaCosa){
-      if(pid_cola.at(current_pid(cpu))< n){
+      if(pid_cola.at(current_pid(cpu))< n-1){
         pid_cola.at(current_pid(cpu))=pid_cola.at(current_pid(cpu))+1;
       }
-
 
       colas[pid_cola.at(current_pid(cpu))].push(current_pid(cpu));
       unicaCosa=false;
@@ -69,7 +69,7 @@ int SchedNoMistery::tick(int cpu, const enum Motivo m) {
 
       if(m == TICK && r == IDLE_TASK && unicaCosa){
         r=current_pid(cpu);
-        if(pid_cola.at(current_pid(cpu))< n){
+        if(pid_cola.at(current_pid(cpu))< n-1){
           pid_cola.at(current_pid(cpu))=pid_cola.at(current_pid(cpu))+1;
         }
         unicaCosa=false;
