@@ -1,1 +1,0 @@
-# SETTINGS ./simusched ejercicio2/lote1.tsk 1 5 1 SchedFCFS

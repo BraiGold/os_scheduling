@@ -34,7 +34,7 @@ ejercicio2: ej2/lote1.tsk
 	./simusched ej2/lote1.tsk 4 5 5 SchedFCFS | python graphsched.py > ej2/lote1-4.png
 
 ejercicio3: ej3/lote1.tsk
-	./simusched ej3/lotei.tsk 1 1 1 SchedFCFS | python graphsched.py > ej3/lote1.png
+	./simusched ej3/lote1.tsk 1 1 1 SchedFCFS | python graphsched.py > ej3/lote1.png
 
 ejercicio5: ej5/lote1.tsk
 	./simusched ej5/lote1.tsk 1 2 1 SchedRR 2 | python graphsched.py > ej5/lote1-q2.png
