@@ -25,3 +25,7 @@ clean:
 
 new: clean all
 
+ejercicio1: ejercicio1/lote1.tsk 
+	./simusched ejercicio1/lote1.tsk 1 1 1 SchedFCFS | python graphsched.py > ejercicio1/lote1.png 
+
+ejercicio2: ejercicio2/
