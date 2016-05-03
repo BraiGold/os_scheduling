@@ -12,7 +12,7 @@ SchedNoMistery::SchedNoMistery(vector<int> argn) {
   queue<int> cola;
   quantumCola.push_back(1);//meto La Cola De 1
   colas.push_back(cola);
-  std::cerr << "tamaño de argn: "<<argn.size() << std::endl;
+  
   for (int i = 0; i < argn.size()-1; i++) {
     quantumCola.push_back(argn[i+1]);
     colas.push_back(cola);
