@@ -1,9 +1,12 @@
 #include "tasks.h"
 #include <iostream>     // std::cout
-
+#include <algorithm>
+#include <vector>
 
 
 using namespace std;
+
+
 
 void TaskCPU(int pid, vector<int> params) { // params: n
 	uso_CPU(pid, params[0]); // Uso el CPU n milisegundos.
@@ -37,26 +40,54 @@ void TaskConsola(int pid, vector<int> params) { // params: n, bmin, bmax
 void TaskEj2(int pid, vector<int> params) { // params: dondeEmpiezoLlamadaBloqueante
 	uso_CPU(pid, params[0] - 1);  
 	int r;
-	r = randombis() % (4 - 1 + 1) + 1;
+	r = randombis() % 4 + 1;
 	uso_IO(pid, r);
 	return;
 }
 
+bool estaEnElVector(int r, vector<int> randoms) {
+	bool res = false;
+	for (int i = 0; i < randoms.size(); i++) {
+		if (randoms[i] == r) {
+			res = true;
+		}
+	}
+	return res;
+} 
+
 void TaskBatch(int pid, vector<int> params){ //params: total_cpu, cant_bloqueos
-	int total_cpu = params[0] - 1;
+	time_t seconds;
+	time(&seconds);
+	srand((unsigned int) seconds);
+	int total_cpu = params[0];
 	int cant_bloqueos = params[1];
 	int r;
-	for(int i = 0; i < cant_bloqueos; i++){ //formula random = % (max - min + 1) + min
-		r = randombis() % ((total_cpu - (cant_bloqueos - i))) + 1;//max = (total_cpu - (cant_bloqueos - i)); min = 1;
-		uso_CPU(pid, r -1);
-		uso_IO(pid, 2);
-		total_cpu = total_cpu - r;
+	vector<int> randoms; //en cada posición va a estar en qué tiempo se tiene que bloquear
+	r = randombis() % total_cpu + 1; //max = total_cpu; min = 1;
+	randoms.push_back(r);
+	for (int j = 1; j < cant_bloqueos; j++) {
+		r = randombis() % total_cpu + 1; //max = total_cpu; min = 1;
+		while(estaEnElVector(r, randoms)) {
+			r = randombis() % total_cpu + 1; //max = total_cpu; min = 1;
+		}
+		randoms.push_back(r);
 	}
-	if(total_cpu > 0){
-		uso_CPU(pid, total_cpu);
+	sort(randoms.begin(), randoms.end());
+	cerr << "Tarea: " << pid << endl;
+	for (int i = 0; i < randoms.size(); i++) {
+		cerr << randoms[i] << endl;
+	}
+
+	uso_CPU(pid, randoms[0]-1);
+	uso_IO(pid, 2);
+	for(int i = 1; i < cant_bloqueos; i++){ //formula random = % (max - min + 1) + min
+		uso_CPU(pid, randoms[i]-randoms[i-1]-1);
+		uso_IO(pid, 2);
+	}
+	if (randoms[cant_bloqueos-1] != total_cpu) {
+		uso_CPU(pid, total_cpu-randoms[cant_bloqueos-1]-1);
 	}
 	return;
-
 }
 
 void tasks_init(void) {
