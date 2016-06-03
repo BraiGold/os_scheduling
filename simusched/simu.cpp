@@ -160,7 +160,7 @@ void simulate(SchedBase& sch, std::vector<ptsk>& lote, const Settings& settings)
       load.pop();
 			tsks[pid].running = 1;
 			sch.load(pid,deadline);
-			//cout << "LOAD " << cur_time << " " << pid << endl;
+			cout << "LOAD " << cur_time << " " << pid << endl;
 		}
 
 		vector<int> to_unblock;
@@ -200,7 +200,7 @@ void simulate(SchedBase& sch, std::vector<ptsk>& lote, const Settings& settings)
                         case ST_EXIT:
                             finished++;
                             npid = sch.tick(cpu, EXIT);
-                            //cout << "EXIT " << cur_time << " " << cpu_pid << " " << cpu << endl;
+                            cout << "EXIT " << cur_time << " " << cpu_pid << " " << cpu << endl;
                             _D(cerr << "SCH tick( " << cpu << " ,EXIT) -> " << npid << endl;)
                             tsks[cpu_pid].running = 0;
                             break;
@@ -213,7 +213,7 @@ void simulate(SchedBase& sch, std::vector<ptsk>& lote, const Settings& settings)
                                 tsks[cpu_pid].blk = ST_CPU;
                                 tsks[cpu_pid].blkms = 0;
                             }
-                            //cout << "BLOCK " << cur_time << " " << cpu_pid << endl;
+                            cout << "BLOCK " << cur_time << " " << cpu_pid << endl;
                             npid = sch.tick(cpu, BLOCK);
                             _D(cerr << "SCH tick( " << cpu << " ,BLOCK) -> " << npid << endl;)
                             break;
@@ -258,24 +258,24 @@ void simulate(SchedBase& sch, std::vector<ptsk>& lote, const Settings& settings)
 
 
 		/* Unblock tasks at the end of the tick */
-		for(int j=0; j<(int)to_unblock.size(); j++) //cout << "UNBLOCK " << cur_time << " " << to_unblock[j] << endl;
+		for(int j=0; j<(int)to_unblock.size(); j++) cout << "UNBLOCK " << cur_time << " " << to_unblock[j] << endl;
 		context_remain= 0;
 
 		//Muestra que esta realizando cada cpu
 		//y calcula si hay contexto total restante (ver while)
 		for(int i= 0; i < contexts.size(); i++){
 			context_remain += contexts[i].remaining;
-			//if (contexts[i].remaining /*context_remain*/) {
-			//	cout << "# CONTEXT CPU " << i << " " << cur_time << endl;
-			//} else{
-			//	cout << "CPU "<< cur_time << " " << contexts[i].pid << " " << i <<endl;
-			//}
+			if (contexts[i].remaining /*context_remain*/) {
+				cout << "# CONTEXT CPU " << i << " " << cur_time << endl;
+			} else{
+				cout << "CPU "<< cur_time << " " << contexts[i].pid << " " << i <<endl;
+			}
 		}
 
     //Muestra si se cumple el deadline de alguna tarea en este tick
     forn(i, dlote.size()){
-      //if(dlote[i].first == cur_time)
-        //cout << "DEADLINE "<< cur_time << " " << dlote[i].second << endl;
+      if(dlote[i].first == cur_time)
+        cout << "DEADLINE "<< cur_time << " " << dlote[i].second << endl;
     }
 
 
