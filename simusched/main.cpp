@@ -208,7 +208,7 @@ int main(int argc, char* argv[]) {
 	if (settings.verbose) {
 		cerr << endl << settings;
 	}
-	cout << "# SETTINGS " << argv[0] << " " << one_line_summary(settings) << endl;
+	//cout << "# SETTINGS " << argv[0] << " " << one_line_summary(settings) << endl;
 
 	//Registro los tipos de tareas.
 	tasks_init();
