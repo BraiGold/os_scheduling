@@ -36,6 +36,11 @@ ejercicio2: ej2/lote1.tsk
 ejercicio3: ej3/lote1.tsk
 	./simusched ej3/lote1.tsk 1 1 1 SchedFCFS | python graphsched.py > ej3/lote1.png
 
+ejercicio4: ej4/lote1.tsk ej4/lote2.tsk
+	./simusched ej4/lote1.tsk 1 1 1 SchedRR 10 | python graphsched.py > ej4/lote1.png
+	./simusched ej4/lote2.tsk 1 1 1 SchedRR 8 | python graphsched.py > ej4/lote2.png
+
+
 ejercicio5: ej5/lote1.tsk
 	./simusched ej5/lote1.tsk 1 2 1 SchedRR 2 | python graphsched.py > ej5/lote1-q2.png
 	./simusched ej5/lote1.tsk 1 2 1 SchedRR 10 | python graphsched.py > ej5/lote1-q10.png
