@@ -48,6 +48,7 @@ void TaskEj2(int pid, vector<int> params) { // params: dondeEmpiezoLlamadaBloque
 	uso_CPU(pid, params[0] - 1);  
 	int r;
 	r = randombis() % 4 + 1;
+	cout << r << endl;
 	uso_IO(pid, r);
 	return;
 }
