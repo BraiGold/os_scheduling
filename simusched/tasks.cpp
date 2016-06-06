@@ -29,18 +29,26 @@ int randombis() {
 }
 
 void TaskConsola(int pid, vector<int> params) { // params: n, bmin, bmax
+	time_t seconds;
+	time(&seconds);
+	srand((unsigned int) seconds);
 	int r;
 	for(int i = 0; i < params[0]; i++) {
 		r = randombis() % (params[2] - params[1] + 1) + params[1];
+		cout << r << endl;
 		uso_IO(pid, r);
 	}
 	return; 
 }
 
 void TaskEj2(int pid, vector<int> params) { // params: dondeEmpiezoLlamadaBloqueante
+	time_t seconds;
+	time(&seconds);
+	srand((unsigned int) seconds);
 	uso_CPU(pid, params[0] - 1);  
 	int r;
 	r = randombis() % 4 + 1;
+	cout << r << endl;
 	uso_IO(pid, r);
 	return;
 }
