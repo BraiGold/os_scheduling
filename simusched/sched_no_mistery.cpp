@@ -7,6 +7,7 @@
 #include <iostream>
 using namespace std;
 
+//int debug=0;
 SchedNoMistery::SchedNoMistery(vector<int> argn) {
   // MFQ recibe los quantums por parÃ¡metro
   queue<int> cola;
@@ -46,7 +47,7 @@ int SchedNoMistery::tick(int cpu, const enum Motivo m) {
       unicaCosa=false;
     }
 
-    if(m==TICK && quantumRestante==0 && unicaCosa){//si se acabo el quantumRestante movelo a la cola de la derecha y encolalo
+    if(m==TICK && quantumRestante==0 && current_pid(cpu)!=IDLE_TASK&& unicaCosa){//si se acabo el quantumRestante movelo a la cola de la derecha y encolalo
       if(pid_cola.at(current_pid(cpu))< n-1){
         pid_cola.at(current_pid(cpu))=pid_cola.at(current_pid(cpu))+1;
       }
@@ -60,9 +61,16 @@ int SchedNoMistery::tick(int cpu, const enum Motivo m) {
 
     for (numCola = 0; numCola < n; numCola++) {//busco la mejor cola (la de mas a la izq) que tenga a alguien y ese es el siguiente
       if(!colas[numCola].empty()){
+        //if(debug==1){ std::cerr << "r sera :"<<colas[numCola].front() << std::endl; }
         r=colas[numCola].front();colas[numCola].pop();
         break;
       }
+      /*debug++;
+      if (debug==2){//debug
+        std::cerr <<"r es:" << r << std::endl;
+        std::cerr << "el tamaño de la cola 1(la de 3) es: "<<colas[1].size() << std::endl;
+        std::cerr << "tiene adentro: "<<colas[1].front() << std::endl;
+      }*/
     }
 
 
